@@ -1,0 +1,154 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+@* I will add some css for looks good *@
+<style>
+    .tableData {
+        border-left: solid 1px #D8C3C3;
+        border-top: solid 1px #D8C3C3;
+    }
+
+        .tableData tr {
+        }
+
+        .tableData td, .tableData th {
+            border-right: solid 1px #D8C3C3;
+            border-bottom: solid 1px #D8C3C3;
+            text-align: left;
+            padding: 5px;
+        }
+
+        .tableData td {
+        }
+
+        .tableData th {
+            background-color: #FAFAFA;
+            padding: 7px 5px;
+            border-bottom-color: #9C9C9C;
+        }
+
+    .odd {
+        background-color: #f3f3f3;
+    }
+
+    .even {
+        background-color: #ffffff;
+    }
+</style>
+<h2>Part4</h2>
+<div ng-controller="AllController">
+    @*<ul class="menu">
+            <li><a href="#!/home">All</a></li>
+            <li><a href="#!/about">About</a></li>
+            <li><a href="#!/order/100">Order</a></li>
+            <li><a href="#!/invalid">Invalid Url</a></li>
+        </ul>*@
+    <table class="tableData" width="80%" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+            <th>Contact ID</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Contact No1</th>
+            <th>Contact No2</th>
+            <th>Adress</th>
+        </tr>
+        <tr ng-repeat="e in Books" ng-class-odd="'odd'" ng-class-even="'even'">
+            <td>{{e.Title}}</td>
+            <td>{{e.ReleaseDate}}</td>
+            <td>{{e.Price}}</td>
+            <td>{{e.Author}}</td>
+            <td>{{e.PublishingHouse}}</td>
+        </tr>
+    </table>
+</div>
+@section scripts{
+    <script src="~/Scripts/Shop.js"></script>
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*@model IEnumerable<Shop.Models.Book>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Wszystkie", "Index")
+    @Html.ActionLink("Audiobooki", "Audiobooks")
+    @Html.ActionLink("E-booki", "Ebooks")
+    @using (Html.BeginForm("Index", "Books", FormMethod.Get))
+    
+    {
+    <p>
+        
+        Nazwa: @Html.TextBox("SearchString") <br />
+        <input type="submit" value="Filter" />
+    </p>
+    }
+    
+</p>
+<p align="right">Twój koszyk Liczba produktów: </p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ReleaseDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Author)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PublishingHouse)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ReleaseDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Price)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Author)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PublishingHouse)
+        </td>
+        <td>
+            @Html.ActionLink("Dodaj do koszyka", "AddToBasket", new { id=item.ID })
+        </td>
+    </tr>
+}
+
+</table>*@

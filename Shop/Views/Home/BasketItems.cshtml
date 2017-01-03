@@ -1,0 +1,55 @@
+﻿@{
+    ViewBag.Title = "BasketItems";
+}
+<div class="row">
+    <div class="col-md-8"><h1>Księgarnia Internetowa</h1><h5>Nasze sklepy prowadzimy z pasją!</h5></div>
+    <div class="col-md-4">Twój koszyk:<a href="#!/basket" class="btn btn-default">Liczba produktów: {{TotalItems}}</a></div>
+</div>
+<div class="row">
+    <div class="col-md-6"><h3>Koszyk</h3></div>
+    </div>
+<ul class="pager">
+    <li><a href="#!/allbooks">Wszystkie</a></li>
+    <li><a href="#!/audiobooks">Audiobooki</a></li>
+    <li><a href="#!/ebooks">E-booki</a></li>
+    <li><a href="#!/novelties">Nowości</a></li>
+    <li><a href="#!/prevues">Zapowiedzi</a></li>
+    <li><a href="#!/greatdeals">Super okazje</a></li>
+</ul>
+    <table class="table table-striped">
+    <tr>
+        <th ng-click="order = 'BookTitle'">Nazwa</th>
+        <th ng-click="order = 'Books.ReleaseDate'">Data Wydania</th>
+        <th ng-click="order = 'Books.Price'">Cena</th>
+        <th ng-click="order = 'Books.Autor'">Autor</th>
+        <th ng-click="order = 'Books.PublishingHouse'">Wydawnictwo</th>
+        <th ng-click="order = 'Storage'">Nośnik</th>
+        <th ng-click="order = 'Quantity'">Ilość</th>
+    </tr>
+    <tr ng-repeat="item in BasketItems | orderBy: order">
+        <td>{{item.BookTitle}}</td>
+        <td>{{item.Books.ReleaseDate.slice(6,-2) | date:'dd.MM.yyyy'}}</td>
+        <td>{{item.Books.Price}}</td>
+        <td>{{item.Books.Author}}</td>
+        <td>{{item.Books.PublishingHouse}}</td>
+        <td>{{item.Storage}}</td>
+        <td>{{item.Quantity}}</td>
+    </tr>
+</table>
+
+            
+            
+
+
+    
+
+
+@section scripts{
+    <script src="~/Scripts/AngularControllers/Routing.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/masonry/2.1.08/jquery.masonry.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.js"></script>
+<script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.11.2.js"></script>
+}

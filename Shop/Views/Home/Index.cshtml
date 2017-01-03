@@ -1,0 +1,75 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+<div class="row">
+    <div class="col-md-4"><header><h1>Księgarnia Internetowa</h1><h5>Nasze sklepy prowadzimy z pasją!</h5></header></div>
+    <div class="col-md-4">Wyszukiwarka <input type="text" class="fa fa-search" style="font-family:Arial, FontAwesome" ng-model="searchbooks" placeholder="&#xf002;" /><button ng-click="search(searchbooks)">Szukaj</button></div>
+    <div class="col-md-4">Twój koszyk:<a href="#!/basket" class="btn btn-default">Liczba produktów: {{TotalItems}}</a></div>
+</div>
+<div class="row">
+    <div class="col-md-6"><h3>Katalog książek: {{tab}}</h3></div>
+</div>
+    <ul class="pager">
+        <li><a href="#!/allbooks">Wszystkie</a></li>
+        <li><a href="#!/audiobooks">Audiobooki</a></li>
+        <li><a href="#!/ebooks">E-booki</a></li>
+        <li><a href="#!/novelties">Nowości</a></li>
+        <li><a href="#!/prevues">Zapowiedzi</a></li>
+        <li><a href="#!/greatdeals">Super okazje</a></li>
+    </ul>
+<div ng-show="visible">
+    <table class="table table-striped">
+        <tr>
+            <th ng-click="order = 'Title'">Nazwa</th>
+            <th ng-click="order = 'ReleaseDate'">Data Wydania</th>
+            <th ng-click="order = 'Price'">Cena</th>
+            <th ng-click="order = 'Autor'">Autor</th>
+            <th ng-click="order = 'PublishingHouse'">Wydawnictwo</th>
+            <th></th>
+        </tr>
+        <tr ng-repeat="book in Book | orderBy: order">
+            <td>{{book.Title}}</td>
+            <td>{{book.ReleaseDate.slice(6,-2) | date:'dd.MM.yyyy'}}</td>
+            <td>{{book.Price}}</td>
+            <td>{{book.Author}}</td>
+            <td>{{book.PublishingHouse}}</td>
+            <td><button ng-click="open(book)">do koszyka</button></td>
+        </tr>
+    </table>
+</div>
+<script type="text/ng-template" id="addToBasket.html">
+    <form ng-submit="ok()">
+        <div class="modal-header">
+            <h3 class="modal-title">Dodaj do koszyka</h3>
+        </div>
+        <div class="modal-body">
+            <dl class="dl-horizontal">
+                <dt>Tytuł</dt>
+                <dd><input class="form-control" type="text" placeholder="{{book.Title}}" readonly></dd>
+                <dt>Nośnik</dt>
+                <dd><select class="form-control" ng-model="basketBook.storage" ng-options="key as val for (key, val) in options"></select></dd>
+                <dt>Ilość</dt>
+                <dd><input class="form-control" type="text" placeholder="ilość" ng-model="basketBook.quantity" /></dd>
+            </dl>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-warning" ng-click="cancel()">Anuluj</button>
+            <input class="btn btn-primary" type="submit" value="OK" />
+            @*<button class="btn btn-primary" ng-click="ok()">OK</button>*@
+        </div>
+    </form>
+</script>
+
+@section scripts{
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/masonry/2.1.08/jquery.masonry.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.js"></script>
+    <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.11.2.js"></script>
+}
+
+
+
+

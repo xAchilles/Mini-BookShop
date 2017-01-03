@@ -1,0 +1,89 @@
+﻿@{
+    ViewBag.Title = "AllBooks";
+}
+@* I will add some css for looks good *@
+<style>
+    .tableData {
+        border-left: solid 1px #D8C3C3;
+        border-top: solid 1px #D8C3C3;
+    }
+
+        .tableData tr {
+        }
+
+        .tableData td, .tableData th {
+            border-right: solid 1px #D8C3C3;
+            border-bottom: solid 1px #D8C3C3;
+            text-align: left;
+            padding: 5px;
+        }
+
+        .tableData td {
+        }
+
+        .tableData th {
+            background-color: #FAFAFA;
+            padding: 7px 5px;
+            border-bottom-color: #9C9C9C;
+        }
+
+    .odd {
+        background-color: #f3f3f3;
+    }
+
+    .even {
+        background-color: #ffffff;
+    }
+     ul.menu {
+        list-style:none;
+        padding:10px;
+        margin:0px;
+    }
+        ul.menu li {
+            float:left;
+            margin:1px;
+        }
+        ul.menu li a{
+            float:left;
+            background-color:#f3f3f3;
+            display:inline-block;
+            padding:5px 20px;
+            
+        }
+            ul.menu li a:hover {
+                background-color:#e4e4e4;
+            }
+</style>
+<h2>AllBooks</h2>
+@*<div ng-controller="AudiobooksController">*@
+    <div>
+    <ul class="menu">
+        <li><a href="#!/allbooks">Wszystkie</a></li>
+        <li><a href="#!/audiobooks">Audiobooki</a></li>
+        <li><a href="#!/order/100">Order</a></li>
+        <li><a href="#!/invalid">Invalid Url</a></li>
+    </ul>
+        <div ng-view></div>
+        </div>
+    <div>
+    <table class="tableData" width="80%" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+            <th>Nazwa</th>
+            <th>Data Wydania</th>
+            <th>Cena</th>
+            <th>Autor</th>
+            <th>Wydawnictwo</th>
+        </tr>
+        <tr ng-repeat="e in Book" ng-class-odd="'odd'" ng-class-even="'even'">
+            <td>{{e.Title}}</td>
+            <td>{{e.ReleaseDate.slice(6,-2) | date:'dd.MM.yyyy'}}</td>
+            <td>{{e.Price}}</td>
+            <td>{{e.Author}}</td>
+            <td>{{e.PublishingHouse}}</td>
+        </tr>
+    </table>
+</div>
+<div class="ng-view"></div>
+@section scripts{
+    <script src="~/Scripts/AngularControllers/Routing.js"></script>
+}
