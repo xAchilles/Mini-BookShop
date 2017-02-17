@@ -4,8 +4,8 @@
 (function () {
     //Create a Module 
     var app = angular.module('MyApp', ['ui.bootstrap', 'ngRoute', 'ngAnimate']);
-
-app.config(function ($routeProvider, $locationProvider) {
+    app.config(function ($routeProvider, $locationProvider) {
+        
     //here we will write code for implement routing 
     $routeProvider
     .when('/', { // This is for reditect to another route
@@ -48,10 +48,12 @@ app.config(function ($routeProvider, $locationProvider) {
 
     $locationProvider.html5Mode(false).hashPrefix('!'); // This is for Hashbang Mode
 })
-.controller('AllBooksController', function ($scope, $modal, $log, $window, AllBooksService, searchService, myService) { //inject ContactService
+.controller('AllBooksController', function ($scope, $modal, $log, $window, AllBooksService, searchService, myService, StorageService) { //inject ContactService
     $scope.tab = "Wszystkie";
     $scope.Book = null;
+    $scope.Storage = null;
     $scope.visible = false;
+    $scope.loadingbar = true;
     $scope.modalShown = false;
     $scope.TotalItems = myService.added();
     myService.set($scope.TotalItems);
@@ -63,8 +65,18 @@ app.config(function ($routeProvider, $locationProvider) {
     .finally(function () {
         //Always execute this on both error and success
         $scope.visible = true;
+        $scope.loadingbar = false;
     }),
-    $scope.open = function (size) {
+    StorageService.GetStorage().then(function (d) {
+        $scope.Storage = d.data; // Success
+    }, function (error) {
+        alert('Failed'); // Failed
+    })
+
+    myService.setStorage($scope.Storage);
+    $scope.Storage = myService.getStorage();
+
+    $scope.open = function (size, storage) {
 
         var modalInstance = $modal.open({
             templateUrl: 'addToBasket.html',
@@ -73,6 +85,9 @@ app.config(function ($routeProvider, $locationProvider) {
             resolve: {
                 Book: function () {
                     return $scope.Book;
+                },
+                Storage: function(){
+                    return storage;
                 },
                 book: function () {
                     return size;
@@ -103,9 +118,11 @@ app.config(function ($routeProvider, $locationProvider) {
     }
 })
 
-.controller('AudiobooksController', function ($scope, $modal, $log, $window, myService, AudiobooksService, searchService) { //inject ContactService
+.controller('AudiobooksController', function ($scope, $modal, $log, $window, myService, AudiobooksService, searchService, StorageService) { //inject ContactService
     $scope.tab = "Audiobooki";
     $scope.Book = null;
+    $scope.Storage = null;
+    $scope.loadingbar = true;
     $scope.visible = false;
     $scope.modalShown = false;
     $scope.TotalItems = myService.added();
@@ -117,9 +134,18 @@ app.config(function ($routeProvider, $locationProvider) {
     }).finally(function () {
         // Always execute this on both error and success
         $scope.visible = true;
+        $scope.loadingbar = false;
     }),
+    StorageService.GetStorage().then(function (d) {
+        $scope.Storage = d.data; // Success
+    }, function (error) {
+        alert('Failed'); // Failed
+    })
 
- $scope.open = function (size) {
+    myService.setStorage($scope.Storage);
+    $scope.Storage = myService.getStorage();
+
+ $scope.open = function (size, storage) {
 
      var modalInstance = $modal.open({
          templateUrl: 'addToBasket.html',
@@ -128,6 +154,9 @@ app.config(function ($routeProvider, $locationProvider) {
          resolve: {
              Book: function () {
                  return $scope.Book;
+             },
+             Storage: function () {
+                 return storage;
              },
              book: function () {
                  return size;
@@ -157,9 +186,11 @@ app.config(function ($routeProvider, $locationProvider) {
     }
 })
 
-.controller('EbooksController', function ($scope, $modal, $log, $window, myService, EbooksService, searchService) { //inject ContactService
+.controller('EbooksController', function ($scope, $modal, $log, $window, myService, EbooksService, searchService, StorageService) { //inject ContactService
     $scope.tab = "E-booki";
     $scope.Book = null;
+    $scope.Storage = null;
+    $scope.loadingbar = true;
     $scope.visible = false;
     $scope.modalShown = false;
     $scope.TotalItems = myService.added();
@@ -171,9 +202,18 @@ app.config(function ($routeProvider, $locationProvider) {
     }).finally(function () {
         // Always execute this on both error and success
         $scope.visible = true;
+        $scope.loadingbar = false;
     }),
+    StorageService.GetStorage().then(function (d) {
+        $scope.Storage = d.data; // Success
+    }, function (error) {
+        alert('Failed'); // Failed
+    })
 
-    $scope.open = function (size) {
+    myService.setStorage($scope.Storage);
+    $scope.Storage = myService.getStorage();
+
+    $scope.open = function (size, storage) {
 
         var modalInstance = $modal.open({
             templateUrl: 'addToBasket.html',
@@ -182,6 +222,9 @@ app.config(function ($routeProvider, $locationProvider) {
             resolve: {
                 Book: function () {
                     return $scope.Book;
+                },
+                Storage: function () {
+                    return storage;
                 },
                 book: function () {
                     return size;
@@ -211,10 +254,12 @@ app.config(function ($routeProvider, $locationProvider) {
     }
 })
 
-.controller('NoveltiesController', function ($scope, $modal, $log, $window, myService, NoveltiesService, searchService) { //inject ContactService
+.controller('NoveltiesController', function ($scope, $modal, $log, $window, myService, NoveltiesService, searchService, StorageService) { //inject ContactService
     $scope.tab = "Nowości";
     $scope.Book = null;
+    $scope.Storage = null;
     $scope.visible = false;
+    $scope.loadingbar = true;
     $scope.modalShown = false;
     $scope.TotalItems = myService.added();
     myService.set($scope.TotalItems);
@@ -225,9 +270,18 @@ app.config(function ($routeProvider, $locationProvider) {
     }).finally(function () {
         // Always execute this on both error and success
         $scope.visible = true;
+        $scope.loadingbar = false;
     }),
+    StorageService.GetStorage().then(function (d) {
+        $scope.Storage = d.data; // Success
+    }, function (error) {
+        alert('Failed'); // Failed
+    })
 
-    $scope.open = function (size) {
+    myService.setStorage($scope.Storage);
+    $scope.Storage = myService.getStorage();
+
+    $scope.open = function (size, storage) {
 
         var modalInstance = $modal.open({
             templateUrl: 'addToBasket.html',
@@ -236,6 +290,9 @@ app.config(function ($routeProvider, $locationProvider) {
             resolve: {
                 Book: function () {
                     return $scope.Book;
+                },
+                Storage: function () {
+                    return storage;
                 },
                 book: function () {
                     return size;
@@ -265,10 +322,12 @@ app.config(function ($routeProvider, $locationProvider) {
     }
 })
 
-.controller('PrevuesController', function ($scope, $modal, $log, $window, myService, PrevuesService, searchService) { //inject ContactService
+.controller('PrevuesController', function ($scope, $modal, $log, $window, myService, PrevuesService, searchService, StorageService) { //inject ContactService
     $scope.tab = "Zapowiedzi";
     $scope.Book = null;
+    $scope.Storage = null;
     $scope.visible = false;
+    $scope.loadingbar = true;
     $scope.modalShown = false;
     $scope.TotalItems = myService.added();
     myService.set($scope.TotalItems);
@@ -279,9 +338,18 @@ app.config(function ($routeProvider, $locationProvider) {
     }).finally(function () {
         // Always execute this on both error and success
         $scope.visible = true;
+        $scope.loadingbar = false;
     }),
+    StorageService.GetStorage().then(function (d) {
+        $scope.Storage = d.data; // Success
+    }, function (error) {
+        alert('Failed'); // Failed
+    })
 
-    $scope.open = function (size) {
+    myService.setStorage($scope.Storage);
+    $scope.Storage = myService.getStorage();
+
+    $scope.open = function (size, storage) {
 
         var modalInstance = $modal.open({
             templateUrl: 'addToBasket.html',
@@ -290,6 +358,9 @@ app.config(function ($routeProvider, $locationProvider) {
             resolve: {
                 Book: function () {
                     return $scope.Book;
+                },
+                Storage: function () {
+                    return storage;
                 },
                 book: function () {
                     return size;
@@ -319,10 +390,12 @@ app.config(function ($routeProvider, $locationProvider) {
     }
 })
 
-.controller('GreatDealsController', function ($scope, $modal, $log, $window, myService, GreatDealsService, searchService) { //inject ContactService
+.controller('GreatDealsController', function ($scope, $modal, $log, $window, myService, GreatDealsService, searchService, StorageService) { //inject ContactService
     $scope.tab = "Super okazje";
     $scope.Book = null;
+    $scope.Storage = null;
     $scope.visible = false;
+    $scope.loadingbar = true;
     $scope.modalShown = false;
     $scope.TotalItems = myService.added();
     myService.set($scope.TotalItems);
@@ -333,9 +406,18 @@ app.config(function ($routeProvider, $locationProvider) {
     }).finally(function () {
         // Always execute this on both error and success
         $scope.visible = true;
+        $scope.loadingbar = false;
     }),
+    StorageService.GetStorage().then(function (d) {
+        $scope.Storage = d.data; // Success
+    }, function (error) {
+        alert('Failed'); // Failed
+    })
 
-    $scope.open = function (size) {
+    myService.setStorage($scope.Storage);
+    $scope.Storage = myService.getStorage();
+
+    $scope.open = function (size, storage) {
 
         var modalInstance = $modal.open({
             templateUrl: 'addToBasket.html',
@@ -344,6 +426,9 @@ app.config(function ($routeProvider, $locationProvider) {
             resolve: {
                 Book: function () {
                     return $scope.Book;
+                },
+                Storage: function () {
+                    return storage;
                 },
                 book: function () {
                     return size;
@@ -373,41 +458,33 @@ app.config(function ($routeProvider, $locationProvider) {
     }
 })
 
-.controller('BasketController', function ($scope, $modalInstance, Book, book, myService) {
+.controller('BasketController', function ($scope, $modalInstance, Storage, Book, book, myService) {
     $scope.modalShown = true;
+    $scope.quantityshow = false;
+    $scope.storageshow = false;
     $scope.BasketItems = [];
-    var data = [
-    {
-        "PenDrive": "PenDrive"
-    },
-    {
-        "CD": "CD"
-    },
-    {
-        "DVD": "DVD"
-    }
-    ];
-    $scope.options = data.reduce(function (memo, obj) {
-        return angular.extend(memo, obj);
-    }, {});
-    console.log(book);
+    $scope.quantitymessage = "Wprowadź liczbę całkowitą od 1 do 999";
+    $scope.storagemessage = "Wybierz jakiś nośnik";
+    console.log(book, Storage);
     $scope.book = book;
-  
-    $scope.Book = book
+    $scope.Storage = Storage;
+    $scope.Book = book;
     $scope.selected = {
         book: $scope.Book[0],
     };
 
+    $scope.options = $scope.Storage;
+
     $scope.ok = function () {
-        $scope.Basket = {
-            "BookTitle": $scope.book.Title,
-            "Storage": $scope.basketBook.storage,
-            "Quantity": parseInt($scope.basketBook.quantity),
-            "TotalQuantity": 0,
-            "Books": $scope.book
-        },
-        myService.push($scope.Basket);
-        $modalInstance.close($scope.Basket)
+        if ($scope.myForm.$valid) {
+            $scope.Basket = {
+                "Books": $scope.book,
+                "Storage": $scope.basketBook.storage,
+                "Quantity": parseInt($scope.basketBook.quantity)
+            },
+            myService.push($scope.Basket);
+            $modalInstance.close($scope.Basket)
+        }
     };
 
     $scope.cancel = function () {
@@ -479,10 +556,19 @@ app.config(function ($routeProvider, $locationProvider) {
     return fac;
 })
 
+.factory('StorageService', function ($http) { // here I have created a factory which is a populer way to create and configure services
+        var fac = {};
+        fac.GetStorage = function () {
+            return $http.get('/Book/GetStorage');
+        }
+        return fac;
+    })
+
     ///////////////////////////////////////////////////
 
 .service('myService', function () {
     var savedData = [];
+    var Storage = [];
     var totalitems = 0;
     var push = function (data) {
         savedData.push(data);
@@ -499,13 +585,21 @@ app.config(function ($routeProvider, $locationProvider) {
     var set = function (data) {
         totalitems = data;
     };
+    var setStorage = function (data) {
+        Storage = data;
+    }
+    var getStorage = function () {
+        return Storage;
+    }
 
     return {
         push: push,
         get: get,
         add: add,
         added: added,
-        set: set
+        set: set,
+        setStorage: setStorage,
+        getStorage: getStorage
     };
 
 })

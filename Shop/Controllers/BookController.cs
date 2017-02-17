@@ -27,7 +27,7 @@ namespace Shop.Controllers
         {
             List<Book> Book = new List<Book>();
 
-            Book = db.Book.OrderBy(a => a.Title).Where(x => x.TypeOfBook == TypeOfBook.Audiobook).ToList();
+            Book = db.Book.OrderBy(a => a.Title).Where(x => x.TypeOfBook.Name == "Audiobook").ToList();
 
             return new JsonResult { Data = Book, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
@@ -36,7 +36,7 @@ namespace Shop.Controllers
         {
             List<Book> Book = new List<Book>();
 
-            Book = db.Book.OrderBy(a => a.Title).Where(x => x.TypeOfBook == TypeOfBook.Ebook).ToList();
+            Book = db.Book.OrderBy(a => a.Title).Where(x => x.TypeOfBook.Name == "E-book").ToList();
 
             return new JsonResult { Data = Book, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
@@ -74,6 +74,15 @@ namespace Shop.Controllers
             return new JsonResult { Data = Book, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
+        public JsonResult GetStorage()
+        {
+            List<Storage> storage = new List<Storage>();
+
+            storage = db.Storage.ToList();
+
+            return new JsonResult { Data = storage, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
+
         public JsonResult GetSearchedBooks(int routing, string search)
         {
             List<Book> Book = new List<Book>();
@@ -87,12 +96,12 @@ namespace Shop.Controllers
                     }
                 case 1:
                     {
-                        Book = db.Book.OrderBy(a => a.Title).Where(x => x.TypeOfBook == TypeOfBook.Audiobook && (x.Title.Contains(search) || x.Author.Contains(search))).ToList(); 
+                        Book = db.Book.OrderBy(a => a.Title).Where(x => x.TypeOfBook.Name == "Audiobook" && (x.Title.Contains(search) || x.Author.Contains(search))).ToList(); 
                         break;
                     }
                 case 2:
                     {
-                        Book = db.Book.OrderBy(a => a.Title).Where(x => x.TypeOfBook == TypeOfBook.Ebook && (x.Title.Contains(search) || x.Author.Contains(search))).ToList(); 
+                        Book = db.Book.OrderBy(a => a.Title).Where(x => x.TypeOfBook.Name == "E-book" && (x.Title.Contains(search) || x.Author.Contains(search))).ToList(); 
                         break;
                     }
                 case 3:

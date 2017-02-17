@@ -31,26 +31,11 @@ namespace Shop.Models
         [StringLength(60, MinimumLength = 3)]
         public string PublishingHouse { get; set; }
 
-        [Required]
         public TypeOfBook TypeOfBook { get; set; }
+
+        public Storage Storage { get; set; }
 
         [Required]
         public bool GreatDeal { get; set; }
-    }
-
-    public class BookDBContext : DbContext
-    {
-        public DbSet<Book> Book { get; set; }
-
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
-        }
-    }
-
-    public enum TypeOfBook
-    {
-        Audiobook, 
-        Ebook
     }
 }

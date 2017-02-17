@@ -137,3 +137,41 @@ ul.menu li a:hover {
 .fontAwesome {
          font-family: 'Helvetica', FontAwesome, sans-serif;
     }
+
+.loadingspinner {
+    border: 16px solid #f3f3f3; /* Light grey */
+    border-top: 16px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    position: fixed;
+     top: 50%;
+     left: 50%;
+  /* bring your own prefixes */
+  transform: translate(-50%, -50%);
+    animation: spin 0.5s linear infinite;
+    
+}
+.background {
+    
+}
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+.show{
+  transition: all linear 0.5s;
+}
+.show.ng-hide {
+  opacity: 0;
+}
+
+button.link { background:none;border:none; }
+
+.form-control.ng-touched.ng-invalid{
+    border-color: red;
+}
+
+.form-control.ng-touched.ng-valid{
+    border-color: green;
+}

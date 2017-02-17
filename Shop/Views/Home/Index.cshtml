@@ -18,57 +18,63 @@
         <li><a href="#!/prevues">Zapowiedzi</a></li>
         <li><a href="#!/greatdeals">Super okazje</a></li>
     </ul>
-<div ng-show="visible">
+<div class="background">
+    <div class="loadingspinner" ng-show="loadingbar"></div>
+</div>
+    <div ng-show="visible" class="show">
     <table class="table table-striped">
         <tr>
-            <th ng-click="order = 'Title'">Nazwa</th>
-            <th ng-click="order = 'ReleaseDate'">Data Wydania</th>
-            <th ng-click="order = 'Price'">Cena</th>
-            <th ng-click="order = 'Autor'">Autor</th>
-            <th ng-click="order = 'PublishingHouse'">Wydawnictwo</th>
+            <th><button class="link" ng-click="order = 'Title'">Nazwa</button></th>
+            <th><button class="link" ng-click="order = 'ReleaseDate'">Data Wydania</button></th>
+            <th><button class="link" ng-click="order = 'Price'">Cena</button></th>
+            <th><button class="link" ng-click="order = 'Autor'">Autor</button></th>
+            <th><button class="link" ng-click="order = 'PublishingHouse'">Wydawnictwo</button></th>
             <th></th>
         </tr>
         <tr ng-repeat="book in Book | orderBy: order">
             <td>{{book.Title}}</td>
             <td>{{book.ReleaseDate.slice(6,-2) | date:'dd.MM.yyyy'}}</td>
-            <td>{{book.Price}}</td>
+            <td>{{book.Price | currency: ""}}</td>
             <td>{{book.Author}}</td>
             <td>{{book.PublishingHouse}}</td>
-            <td><button ng-click="open(book)">do koszyka</button></td>
+            <td><button ng-click="open(book, Storage)">do koszyka</button></td>
         </tr>
     </table>
 </div>
-<script type="text/ng-template" id="addToBasket.html">
-    <form ng-submit="ok()">
-        <div class="modal-header">
-            <h3 class="modal-title">Dodaj do koszyka</h3>
-        </div>
-        <div class="modal-body">
-            <dl class="dl-horizontal">
-                <dt>Tytuł</dt>
-                <dd><input class="form-control" type="text" placeholder="{{book.Title}}" readonly></dd>
-                <dt>Nośnik</dt>
-                <dd><select class="form-control" ng-model="basketBook.storage" ng-options="key as val for (key, val) in options"></select></dd>
-                <dt>Ilość</dt>
-                <dd><input class="form-control" type="text" placeholder="ilość" ng-model="basketBook.quantity" /></dd>
-            </dl>
-        </div>
-        <div class="modal-footer">
-            <button class="btn btn-warning" ng-click="cancel()">Anuluj</button>
-            <input class="btn btn-primary" type="submit" value="OK" />
-            @*<button class="btn btn-primary" ng-click="ok()">OK</button>*@
-        </div>
-    </form>
-</script>
+    <script type="text/ng-template" id="addToBasket.html">
+        <form name="myForm" ng-submit="ok()">
+            <div class="modal-header">
+                <h3 class="modal-title">Dodaj do koszyka</h3>
+            </div>
+            <div class="modal-body">
+                <dl class="dl-horizontal">
+                    <dt>Tytuł</dt>
+                    <dd><input class="form-control" type="text" placeholder="{{book.Title}}" readonly></dd>
+                    <dt>Nośnik</dt>
+                    @*<dd><select class="form-control" ng-model="basketBook.storage" ng-options="key as val for (key, val) in options"></select></dd>*@
+                    <dd><select class="form-control" ng-model="basketBook.storage" ng-options="item as item.Name for item in options track by item.ID" required></select></dd>
+                    <dd ng-show="myForm.basketBook.storage.$invalid">{{storagemessage}}</dd>
+                    <dt>Ilość</dt>
+                    <dd><input class="form-control" type="number" placeholder="ilość" ng-model="basketBook.quantity" min="1" max="999" required/></dd>
+                    <dd ng-show="myForm.basketBook.quantity.$invalid">{{quantitymessage}}</dd>
+                </dl>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-warning" ng-click="cancel()">Anuluj</button>
+                <input class="btn btn-primary" type="submit" value="OK" />
+                @*<button class="btn btn-primary" ng-click="ok()">OK</button>*@
+            </div>
+        </form>
+    </script>
 
-@section scripts{
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/masonry/2.1.08/jquery.masonry.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.js"></script>
-    <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.11.2.js"></script>
-}
+    @section scripts{
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/masonry/2.1.08/jquery.masonry.min.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.js"></script>
+        <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.11.2.js"></script>
+    }
 
 
 

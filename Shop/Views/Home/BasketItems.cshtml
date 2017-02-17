@@ -18,21 +18,19 @@
 </ul>
     <table class="table table-striped">
     <tr>
-        <th ng-click="order = 'BookTitle'">Nazwa</th>
-        <th ng-click="order = 'Books.ReleaseDate'">Data Wydania</th>
-        <th ng-click="order = 'Books.Price'">Cena</th>
-        <th ng-click="order = 'Books.Autor'">Autor</th>
-        <th ng-click="order = 'Books.PublishingHouse'">Wydawnictwo</th>
-        <th ng-click="order = 'Storage'">Nośnik</th>
-        <th ng-click="order = 'Quantity'">Ilość</th>
+        <th><button class="link" ng-click="order = 'Books.Title'">Nazwa</button></th>
+        <th><button class="link" ng-click="order = 'Books.ReleaseDate'">Data Wydania</button></th>
+        <th><button class="link" ng-click="order = 'Books.Autor'">Autor</button></th>
+        <th><button class="link" ng-click="order = 'Books.PublishingHouse'">Wydawnictwo</button></th>
+        <th><button class="link" ng-click="order = 'Storage'">Nośnik</button></th>
+        <th><button class="link" ng-click="order = 'Quantity'">Ilość</button></th>
     </tr>
     <tr ng-repeat="item in BasketItems | orderBy: order">
-        <td>{{item.BookTitle}}</td>
+        <td>{{item.Books.Title}}</td>
         <td>{{item.Books.ReleaseDate.slice(6,-2) | date:'dd.MM.yyyy'}}</td>
-        <td>{{item.Books.Price}}</td>
         <td>{{item.Books.Author}}</td>
         <td>{{item.Books.PublishingHouse}}</td>
-        <td>{{item.Storage}}</td>
+        <td>{{item.Storage.Name}}</td>
         <td>{{item.Quantity}}</td>
     </tr>
 </table>

@@ -26,7 +26,9 @@ namespace Shop
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css",
-                      "~/Content/font-awesome/css/font-awesome.min.css"));
+                      "~/Content/font-awesome/css/font-awesome.min.css",
+                      "~/Content/loading-bar.css",
+                      "~/Content/loading-bar.min.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/angular").Include(
                    "~/Scripts/angular.js",
